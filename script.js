@@ -107,3 +107,42 @@ nav.addEventListener("mouseover", function(e) {
 nav.addEventListener("mouseout", function(e) {
   handleOver(e, 1);
 });
+
+
+//Sticky Navigation: Intersection Observer API
+const header = document.querySelector(".header");
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+});
+headerObserver.observe(header);
+
+
+//Revealing Sections
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function(entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section--hidden");
+  observer.unobserve(entry.target);    
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.05,  
+});
+
+allSections.forEach(function(section) {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
