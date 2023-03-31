@@ -84,3 +84,26 @@ tabContainer.addEventListener("click", function(e) {
   //Active content area
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add("operations__content--active");
 });
+
+//Menu fade animation
+const nav = document.querySelector(".nav");
+
+const handleOver = function(e, opacity) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = opacity;
+    });
+    logo.style.opacity = opacity;
+  }
+}
+
+nav.addEventListener("mouseover", function(e) {
+  handleOver(e, 0.5);
+});
+nav.addEventListener("mouseout", function(e) {
+  handleOver(e, 1);
+});
